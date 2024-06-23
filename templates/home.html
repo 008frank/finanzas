@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home_layout.css') }}">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <title>Balance</title>
+</head>
+
+<header>
+    <div class="header_div">
+        <h1>Balance de caja</h1>
+        <div class="menu_header">
+            <a href="{{ url_for('income') }}">Ingresos</a>
+            <a href="{{ url_for('bills') }}">Egresos</a>
+            <a href="{{ url_for('logout') }}">Salir</a>
+        </div>
+        <div class="menu_div" id="my_img" onclick="menuClick()">
+            <div class="menu_img">
+            </div>
+        </div>
+    </div>
+</header>  
+  
+<body>
+    <!-- EXTENDED MENU -->
+    <div class="extended_main_div" id="my_menu">
+        <div class="menu_holder" id="my_holder">
+            <div class="extended_menu_links">
+                <a id="a_extended" href="{{ url_for('income') }}">Ingresos</a>
+                <a id="a_extended" href="{{ url_for('bills') }}">Egresos</a>
+                <a id="a_extended" href="{{ url_for('history') }}">Historial</a>
+                <a id="a_extended" href="{{ url_for('logout') }}">Salir</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main_body_container">
+        <div class="main_table">
+            <table>
+                <tr>
+                    <th>Descripcion</th>
+                    <th>Cantidad</th>
+                <tr>
+                <tbody>
+                    <tr>
+                        <td id="descript">Diezmo</td>
+                        {% if element[0] < 1 %}
+                            <td>---</td>
+                        {% else %}
+                            <td style="color: green;">${{ element[0] }}</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td id="descript">Despensa</td>
+                        {% if element[1] < 1 %}
+                            <td>---</td>
+                        {% else %}
+                            <td style="color: green;">${{ element[1] }}</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td id="descript">Salud</td>
+                        {% if element[2] < 1 %}
+                            <td>---</td>
+                        {% else %}
+                            <td style="color: green;">${{ element[2] }}</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td id="descript">Transporte</td>
+                        {% if element[3] < 1 %}
+                            <td>---</td>
+                        {% else %}
+                            <td style="color: green;">${{ element[3] }}</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td id="descript">Internet</td>
+                        {% if element[4] < 1 %}
+                            <td>---</td>
+                        {% else %}
+                            <td style="color: green;">${{ element[4] }}</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td id="descript">Luz</td>
+                        {% if element[5] < 1 %}
+                            <td>---</td>
+                        {% else %}
+                            <td style="color: green;">${{ element[5] }}</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td id="descript">Agua</td>
+                        {% if element[6] < 1 %}
+                            <td>---</td>
+                        {% else %}
+                            <td style="color: green;">${{ element[6] }}</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td id="descript">Gas</td>
+                        {% if element[7] < 1 %}
+                            <td>---</td>
+                        {% else %}
+                            <td style="color: green;">${{ element[7] }}</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td id="descript">Dentista</td>
+                        {% if element[8] < 1 %}
+                            <td>---</td>
+                        {% else %}
+                            <td style="color: green;">${{ element[8] }}</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td id="descript">Saldo</td>
+                        {% if element[9] < 1 %}
+                            <td>---</td>
+                        {% else %}
+                            <td style="color: green;">${{ element[9] }}</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td id="descript">Gasolina</td>
+                        {% if element[10] < 1 %}
+                            <td>---</td>
+                        {% else %}
+                            <td style="color: green;">${{ element[10] }}</td>
+                        {%endif%}
+                    </tr>
+                    <tr>
+                        <td id="descript">Renta</td>
+                        {% if element[11] < 1 %}
+                            <td>---</td>
+                        {% else %}
+                            <td style="color: green;">${{ element[11] }}</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold; font-size: 20px;">Total</td>
+                        <td style="font-weight: bold; font-size: 20px;">${{ total }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="charts">
+            <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+            <canvas id="myChart2" style="width:100%;max-width:600px"></canvas>
+        </div>
+    </div>
+
+    <script>
+        const xValues = ['','Semana 1','Semana 2','Semana 3','Semana 4'];
+
+        new Chart("myChart", {
+            type: "line",
+            data: {
+                labels: xValues,
+                datasets: [{ 
+                data: {{ ch1 }},
+                borderColor: "blue",
+                fill: false
+                }, { 
+                data: [0,2080.00,4160.00,6240.00,8320.00],
+                borderColor: "gray",
+                fill: true
+                }]
+            },
+            options: {
+                legend: {display: false},
+                title: {
+                    display: true,
+                    text: "Ingresos Ivan",
+                    position: "top"
+                }
+            }
+        });
+    </script>
+    <script>
+        const xValues2 = ['','Quncena 1','Quincena 2'];
+
+        new Chart("myChart2", {
+            type: "line",
+            data: {
+                labels: xValues2,
+                datasets: [{ 
+                data: {{ ch2 }},
+                borderColor: "green",
+                fill: false
+                }, { 
+                data: [0,4000.00,8000.00],
+                borderColor: "gray",
+                fill: true
+                }]
+            },
+            options: {
+                legend: {display: false},
+                title: {
+                    display: true,
+                    text: "Ingresos Damaris",
+                    position: "top"
+                }
+            }
+        });
+    </script>
+    
+    <script>
+        function menuClick() {
+            var x = document.getElementById("my_menu");
+            var y = document.getElementById("my_img");
+            var div_out = document.getElementById("my_holder");
+            
+            if (x.style.display == "flex") {
+                div_out.animate (
+                    [
+                        {
+                            transform: "translateX(0%)",
+                            opacity: 1
+                        },
+                        {
+                            transform: "translateX(100%)",
+                            opacity: 0.25
+                        }
+                    ], 
+                    {
+                        duration: 400,
+                    }
+                );
+                
+                setTimeout(
+                    function(){
+                        x.style.display = "none";
+                    },
+                    // miliseconds
+                    100
+                )
+                
+            }
+            else {
+                x.style.display = "flex";
+                y.style.backgroundColor = "orange";
+            }
+        }
+    </script>
+    
+</body>
+
+</html>
