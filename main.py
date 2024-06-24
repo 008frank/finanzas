@@ -6,10 +6,10 @@ from db_users import GetData
 app = Flask(__name__)
 
 db = mysql.connector.connect(
-    host = "192.168.1.172",
-    user ="caja",
-    password = "hd_tu_08",
-    database = "finanzas",
+    host = "frank008.mysql.pythonanywhere-services.com",
+    user ="frank008",
+    password = "Temporary01+",
+    database = "frank008$finanzas",
     port = "3306"
 )
 
