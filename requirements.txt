@@ -1,4 +1,3 @@
 flask
-pip
 python-dotenv
 guinicorn
