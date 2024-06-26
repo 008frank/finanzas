@@ -1,4 +1,4 @@
 flask==3.0.3
 flask_mysqldb==2.0.0
 python-dotenv==1.0.1
-guinicorn==22.0.0
+guinicorn==21.1.0
