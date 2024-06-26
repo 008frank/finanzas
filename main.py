@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_mysqldb import MySQL
 from User import User
 from db_users import GetData
+import os
 
 def crear_app():
     app = Flask(__name__)
@@ -194,4 +195,4 @@ def crear_app():
 
 if __name__=='__main__':
     app = crear_app()
-    app.run(debug=True)
+    app.run(debug=True, host=0.0.0.0, port=os.getenv("PORT", default=5000))
