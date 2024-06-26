@@ -1,3 +1,3 @@
 flask
 python-dotenv
-guinicorn
+guinicorn==22.0.0
