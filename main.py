@@ -1,23 +1,23 @@
 from flask import Flask, render_template, request, redirect, url_for
-import mysql.connector
+from flask_mysqldb import MySQL
 from User import User
 from db_users import GetData
 
 app = Flask(__name__)
 
-db = mysql.connector.connect(
-    host = "frank008.mysql.pythonanywhere-services.com",
-    user ="frank008",
-    password = "Temporary01+",
-    database = "frank008$finanzas",
-    port = "3306"
-)
+app.config['MYSQL_HOST'] = 'bj7l3xtoftrlpschwtah-mysql.services.clever-cloud.com'
+app.config['MYSQL_USER'] = 'u28owjanx91fbbgg'
+app.config['MYSQL_PASSWORD'] = 'Hib9YhOmKLh3xa3MMPMZ'
+app.config['MYSQL_DATABASE'] = 'bj7l3xtoftrlpschwtah'
+app.config['MYSQL_PORT'] = 3306
+
+mysql = MySQL(app)
 
 
 @app.route('/', methods=['GET','POST'])
 def index():
     if request.method == 'POST':
-        user = User(db, request.form['input_1'], request.form['input_2'])
+        user = User(app, mysql, request.form['input_1'], request.form['input_2'])
         if user.identication() == True:
             return redirect(url_for('home'))
         else:
@@ -29,12 +29,12 @@ def index():
 
 @app.route('/home')
 def home():
-    get_list = GetData.set_balance(None, db)
+    get_list = GetData.set_balance(None, app, mysql)
     total_value = sum(get_list)
     list_values1 = [0]
     list_values2 = [0]
     
-    charts_info = GetData.get_data_charts(None, db)
+    charts_info = GetData.get_data_charts(None, app, mysql)
     
     for x in charts_info[0]:
         list_values1.append(float(x))
@@ -55,7 +55,7 @@ def income():
         if selection == "history":
             try:
                 history = request.form['get_my_history']
-                getting_history = GetData.db_history(db, history)
+                getting_history = GetData.db_history(app, mysql, history)
                 
                 years = getting_history[0]
                 data1 = getting_history[1]
@@ -83,7 +83,7 @@ def income():
                         
                         elements_list = [diezmo, despensa, salud, transporte, internet, luz, agua, gas]
                         
-                        save_information = GetData.save_income(db, elements_list, user)
+                        save_information = GetData.save_income(app, mysql, elements_list, user)
                         
                         if save_information == True:
                             end_tittle = "¡El proceso ha sido exitoso!"
@@ -108,7 +108,7 @@ def income():
                         
                         elements_list = [diezmo, dentista, saldo, gasolina, renta]
                         
-                        save_information = GetData.save_income(db, elements_list, user)
+                        save_information = GetData.save_income(app, mysql, elements_list, user)
                         
                         if save_information == True:
                             end_tittle = "¡El proceso ha sido exitoso!"
@@ -150,7 +150,7 @@ def bills():
             
             elements_list = [diezmo, despensa, salud, transporte, internet, luz, agua, gas, dentista, gasolina, saldo, renta]
             
-            save_information = GetData.save_bills(db, elements_list)
+            save_information = GetData.save_bills(app, mysql, elements_list)
             
             if save_information == True:
                 end_tittle = "¡El proceso ha sido exitoso!"
@@ -171,7 +171,7 @@ def history():
     if request.method=='POST':
         try:
             history = request.form['get_my_history']
-            getting_history = GetData.db_history(db, history)
+            getting_history = GetData.db_history(app, mysql, history)
             
             years = getting_history[0]
             data1 = getting_history[1]
