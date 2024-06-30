@@ -217,70 +217,43 @@ class GetData:
                 return response
         
      
-    # def get_data_charts(self, app, database):
-    #     ivan_li = []
-    #     damaris_li = []
+    def get_data_charts(self, app, database):
+        ivan_li = []
+        damaris_li = []
 
-    #     year = dt.now().year
-    #     month = dt.now().month
+        year = dt.now().year
+        month = dt.now().month
         
-    #     # IVAN DATA
-    #     with app.app_context():            
-    #         cursor = database.connection.cursor()
-    #         sql = """select diezmo+despensa+salud+transporte+internet+luz+agua+gas
-    #         from bj7l3xtoftrlpschwtah.ingresos_ivan
-    #         where year(fecha)={} and month(fecha)={}""".format(year, month)
+        # IVAN DATA
+        with app.app_context():            
+            cursor = database.connection.cursor()
+            sql = """select diezmo+despensa+salud+transporte+internet+luz+agua+gas
+            from bj7l3xtoftrlpschwtah.ingresos_ivan
+            where year(fecha)={} and month(fecha)={}""".format(year, month)
             
-    #         cursor.execute(sql)
-    #         data = cursor.fetchall()
-    #         for x in data:
-    #             ivan_li.append(x[0])
-    #         # DAMARIS DATA
-    #         sql2 = """select diezmo+dentista+gasolina+saldo+renta
-    #         from bj7l3xtoftrlpschwtah.ingresos_damaris
-    #         where year(fecha)={} and month(fecha)={}""".format(year, month)
+            cursor.execute(sql)
+            data = cursor.fetchall()
+            for x in data:
+                ivan_li.append(x[0])
+            # DAMARIS DATA
+            sql2 = """select diezmo+dentista+gasolina+saldo+renta
+            from bj7l3xtoftrlpschwtah.ingresos_damaris
+            where year(fecha)={} and month(fecha)={}""".format(year, month)
             
-    #         cursor.execute(sql2)
-    #         data2 = cursor.fetchall()
-    #         for x in data2:
-    #             damaris_li.append(x[0])
+            cursor.execute(sql2)
+            data2 = cursor.fetchall()
+            for x in data2:
+                damaris_li.append(x[0])
                 
-    #         result_list1 = []
-    #         result_list2 = []
+            result_list1 = sum(ivan_li)
+            result_list2 = sum(damaris_li)
 
-
-    #         # RESULT FOR IVAN LIST
-    #         if len(ivan_li) == 1:
-    #             result_list1.append(ivan_li[0])
-
-    #         elif len(ivan_li) == 2:
-    #             result_list1.append(ivan_li[0])
-    #             result_list1.append(ivan_li[0] + ivan_li[1])
-
-    #         elif len(ivan_li) == 3:
-    #             result_list1.append(ivan_li[0])
-    #             result_list1.append(ivan_li[0] + ivan_li[1])
-    #             result_list1.append(ivan_li[0] + ivan_li[1] + ivan_li[2])
-
-    #         elif len(ivan_li) == 4:
-    #             result_list1.append(ivan_li[0])
-    #             result_list1.append(ivan_li[0] + ivan_li[1])
-    #             result_list1.append(ivan_li[0] + ivan_li[1] + ivan_li[2])
-    #             result_list1.append(ivan_li[0] + ivan_li[1] + ivan_li[2] + ivan_li[3])
-    #         else:
-    #             result_list1[0]
+            total_sum = result_list1 + result_list2
+            goal = 16320
+            
+            current_value = goal - (total_sum)
                 
-    #         # RESULT FOR DAMARIS LIST
-    #         if len(damaris_li) == 1:
-    #             result_list2.append(damaris_li[0])
-
-    #         elif len(damaris_li) == 2:
-    #             result_list2.append(damaris_li[0])
-    #             result_list2.append(damaris_li[0] + damaris_li[1])
-    #         else:
-    #             result_list2[0]
-                
-    #         return [result_list1, result_list2]
+            return [total_sum, current_value]
         
         
     def save_income(app, database, income_list, name):

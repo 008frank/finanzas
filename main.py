@@ -37,17 +37,9 @@ def home():
             get_totals.append(t)
     total_value = sum(get_totals)
     
-    list_values1 = [0]
-    list_values2 = [0]
+    current_amount = GetData.get_data_charts(None, app, mysql)
     
-    # charts_info = GetData.get_data_charts(None, app, mysql)
-    
-    # for x in charts_info[0]:
-    #     list_values1.append(float(x))
-    # for x in charts_info[1]:
-    #     list_values2.append(float(x))
-    
-    return render_template('home.html', element=get_list, total=total_value)#, ch1=list_values1, ch2=list_values2)
+    return render_template('home.html', element=get_list, total=total_value, ca=current_amount)
 
 
 @app.route('/income', methods=['GET','POST'])

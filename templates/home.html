@@ -150,64 +150,35 @@
 
         <div class="charts">
             <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
-            <canvas id="myChart2" style="width:100%;max-width:600px"></canvas>
         </div>
     </div>
 
     <script>
-        const xValues = ['','Semana 1','Semana 2','Semana 3','Semana 4'];
-
+        var xValues = ["Ingresos", "Meta"];
+        var yValues = [{{ ca[0] }}, {{ ca[1] }}];
+        var barColors = [
+          "rgba(63, 39, 255, 0.67)",
+          "rgba(0, 0, 0, 0.11)"
+        ];
+        
         new Chart("myChart", {
-            type: "line",
-            data: {
-                labels: xValues,
-                datasets: [{ 
-                data: {{ ch1 }},
-                borderColor: "blue",
-                fill: false
-                }, { 
-                data: [0,2080.00,4160.00,6240.00,8320.00],
-                borderColor: "gray",
-                fill: true
-                }]
-            },
-            options: {
-                legend: {display: false},
-                title: {
-                    display: true,
-                    text: "Ingresos Ivan",
-                    position: "top"
-                }
+          type: "doughnut",
+          data: {
+            labels: xValues,
+            datasets: [{
+              backgroundColor: barColors,
+              data: yValues
+            }]
+          },
+          options: {
+            title: {
+              display: true,
+              text: "Objetivo mensual"
             }
+          }
         });
-    </script>
-    <script>
-        const xValues2 = ['','Quncena 1','Quincena 2'];
-
-        new Chart("myChart2", {
-            type: "line",
-            data: {
-                labels: xValues2,
-                datasets: [{ 
-                data: {{ ch2 }},
-                borderColor: "green",
-                fill: false
-                }, { 
-                data: [0,4000.00,8000.00],
-                borderColor: "gray",
-                fill: true
-                }]
-            },
-            options: {
-                legend: {display: false},
-                title: {
-                    display: true,
-                    text: "Ingresos Damaris",
-                    position: "top"
-                }
-            }
-        });
-    </script>
+        </script>
+    
     
     <script>
         function menuClick() {
