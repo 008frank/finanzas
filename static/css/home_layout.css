@@ -70,6 +70,7 @@ tr:hover {
 .charts {
   grid-area: charts;
   width: 100%;
+  margin-top: 20px;
 }
 
 
