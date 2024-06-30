@@ -34,12 +34,15 @@ def home():
     get_totals = []
     for t in get_list:
         if t > 0:
-            get_totals.append(t)
-    total_value = sum(get_totals)
+            get_totals.append(f'{t:,.2f}')
+        else:
+            get_totals.append('-')
+    
+    total_value = sum(s for s in get_list if s > 0)
     
     current_amount = GetData.get_data_charts(None, app, mysql)
     
-    return render_template('home.html', element=get_list, total=total_value, ca=current_amount)
+    return render_template('home.html', element=get_totals, total=f'{total_value:,.2f}', ca=current_amount)
 
 
 @app.route('/income', methods=['GET','POST'])

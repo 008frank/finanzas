@@ -46,110 +46,119 @@
                 <tbody>
                     <tr>
                         <td id="descript">Diezmo</td>
-                        {% if element[0] < 1 %}
-                            <td>---</td>
+                        {% if element[0]|length < 2 %}
+                            <td>-</td>
                         {% else %}
-                            <td style="color: green;">${{ element[0] }}</td>
+                            <td style="color: green;">{{ element[0] }}</td>
                         {% endif %}
                     </tr>
                     <tr>
                         <td id="descript">Despensa</td>
-                        {% if element[1] < 1 %}
-                            <td>---</td>
+                        {% if element[1]|length < 2 %}
+                            <td>-</td>
                         {% else %}
-                            <td style="color: green;">${{ element[1] }}</td>
+                            <td style="color: green;">{{ element[1] }}</td>
                         {% endif %}
                     </tr>
                     <tr>
                         <td id="descript">Salud</td>
-                        {% if element[2] < 1 %}
-                            <td>---</td>
+                        {% if element[2]|length < 2 %}
+                            <td>-</td>
                         {% else %}
-                            <td style="color: green;">${{ element[2] }}</td>
+                            <td style="color: green;">{{ element[2] }}</td>
                         {% endif %}
                     </tr>
                     <tr>
                         <td id="descript">Transporte</td>
-                        {% if element[3] < 1 %}
-                            <td>---</td>
+                        {% if element[3]|length < 2 %}
+                            <td>-</td>
                         {% else %}
-                            <td style="color: green;">${{ element[3] }}</td>
+                            <td style="color: green;">{{ element[3] }}</td>
                         {% endif %}
                     </tr>
                     <tr>
                         <td id="descript">Internet</td>
-                        {% if element[4] < 1 %}
-                            <td>---</td>
+                        {% if element[4]|length < 2 %}
+                            <td>-</td>
                         {% else %}
-                            <td style="color: green;">${{ element[4] }}</td>
+                            <td style="color: green;">{{ element[4] }}</td>
                         {% endif %}
                     </tr>
                     <tr>
                         <td id="descript">Luz</td>
-                        {% if element[5] < 1 %}
-                            <td>---</td>
+                        {% if element[5]|length < 2 %}
+                            <td>-</td>
                         {% else %}
-                            <td style="color: green;">${{ element[5] }}</td>
+                            <td style="color: green;">{{ element[5] }}</td>
                         {% endif %}
                     </tr>
                     <tr>
                         <td id="descript">Agua</td>
-                        {% if element[6] < 1 %}
-                            <td>---</td>
+                        {% if element[6]|length < 2 %}
+                            <td>-</td>
                         {% else %}
-                            <td style="color: green;">${{ element[6] }}</td>
+                            <td style="color: green;">{{ element[6] }}</td>
                         {% endif %}
                     </tr>
                     <tr>
                         <td id="descript">Gas</td>
-                        {% if element[7] < 1 %}
-                            <td>---</td>
+                        {% if element[7]|length < 2 %}
+                            <td>-</td>
                         {% else %}
-                            <td style="color: green;">${{ element[7] }}</td>
+                            <td style="color: green;">{{ element[7] }}</td>
                         {% endif %}
                     </tr>
                     <tr>
                         <td id="descript">Dentista</td>
-                        {% if element[8] < 1 %}
-                            <td>---</td>
+                        {% if element[8]|length < 2 %}
+                            <td>-</td>
                         {% else %}
-                            <td style="color: green;">${{ element[8] }}</td>
+                            <td style="color: green;">{{ element[8] }}</td>
                         {% endif %}
                     </tr>
                     <tr>
                         <td id="descript">Saldo</td>
-                        {% if element[9] < 1 %}
-                            <td>---</td>
+                        {% if element[9]|length < 2 %}
+                            <td>-</td>
                         {% else %}
-                            <td style="color: green;">${{ element[9] }}</td>
+                            <td style="color: green;">{{ element[9] }}</td>
                         {% endif %}
                     </tr>
                     <tr>
                         <td id="descript">Gasolina</td>
-                        {% if element[10] < 1 %}
-                            <td>---</td>
+                        {% if element[10]|length < 2 %}
+                            <td>-</td>
                         {% else %}
-                            <td style="color: green;">${{ element[10] }}</td>
+                            <td style="color: green;">{{ element[10] }}</td>
                         {%endif%}
                     </tr>
                     <tr>
                         <td id="descript">Renta</td>
-                        {% if element[11] < 1 %}
-                            <td>---</td>
+                        {% if element[11]|length < 2 %}
+                            <td>-</td>
                         {% else %}
-                            <td style="color: green;">${{ element[11] }}</td>
+                            <td style="color: green;">{{ element[11] }}</td>
                         {% endif %}
                     </tr>
                     <tr>
                         <td style="font-weight: bold; font-size: 20px;">Total</td>
-                        <td style="font-weight: bold; font-size: 20px;">${{ total }}</td>
+                        <td style="font-weight: bold; font-size: 20px;">$ {{ total }}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
         <div class="charts">
-            <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+            <div class="status_maindiv">
+                <div class="status_card">
+                    <p class="p1">Estado</p>
+                    <p class="p2">Acumulado: <span style="color: green;">...</span> / Restante: <span>...</span></p>
+                    <p class="p3">Ultimo ingreso registrado: <span>...</span></p>
+                </div>
+            </div>
+            <div class="chart_area">
+                <canvas id="myChart" ></canvas>
+            </div>
         </div>
     </div>
 
@@ -157,7 +166,7 @@
         var xValues = ["Ingresos", "Meta"];
         var yValues = [{{ ca[0] }}, {{ ca[1] }}];
         var barColors = [
-          "rgba(63, 39, 255, 0.67)",
+          "#004ce9",
           "rgba(0, 0, 0, 0.11)"
         ];
         
@@ -174,6 +183,9 @@
             title: {
               display: true,
               text: "Objetivo mensual"
+            },
+            legend: {
+                display: false
             }
           }
         });

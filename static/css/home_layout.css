@@ -1,8 +1,6 @@
 body {
   margin: 0;
   font-family: sans-serif;
-  /* background-image: url(/static/css/img/business-3528035_1920.jpg);
-  background-size: cover; */
 }
 .main_body_container {
   display: grid;
@@ -67,12 +65,47 @@ tr:hover {
 }
 #a_extended {display: none;}
 
+
 .charts {
   grid-area: charts;
   width: 100%;
   margin-top: 20px;
 }
-
+#myChart {
+  width:100%;
+  max-width:600px;
+  height: 300px;
+}
+.chart_area {
+  grid-area: my_chart;
+}
+.status_maindiv {
+  max-width:600px;
+  grid-area: my_status;
+  display: flex;
+  justify-content: center;
+}
+.status_card {
+  margin: 10px;
+  display: grid;
+  width: 100%;
+  /* COLOR */
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  
+  grid-template-areas: 
+  'p1'
+  'p2'
+  'p3';
+  gap: 0;
+}
+.p1 {grid-area: p1; width: 100%; text-align: center; margin-top: 0; margin-bottom: 5px; font-size: 19px; font-weight: bold;}
+.p2 {grid-area: p2; width: 100%; text-align: center; margin-top: 0; margin-bottom: 5px;}
+.p3 {grid-area: p3; width: 100%; text-align: center; margin-top: 0; margin-bottom: 5px;}
 
 /* ---RESPONSIVE--- */
 @media(max-width: 650px) {
@@ -138,9 +171,17 @@ tr:hover {
     'tables' 
     'charts';
   }
+  .charts {
+    width: 100%;
+    grid-template-areas: 
+  'my_chart'
+  'my_status';
+  }
   #myChart {
+    max-width: 100%;
     width: auto;
-    margin-top: 20px;
+    height: auto;
+    margin-top: 8px;
   }
 }
   
