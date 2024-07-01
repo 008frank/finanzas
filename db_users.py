@@ -220,6 +220,7 @@ class GetData:
     def get_data_charts(self, app, database):
         ivan_li = []
         damaris_li = []
+        date_li = []
 
         year = dt.now().year
         month = dt.now().month
@@ -235,6 +236,7 @@ class GetData:
             data = cursor.fetchall()
             for x in data:
                 ivan_li.append(x[0])
+                
             # DAMARIS DATA
             sql2 = """select diezmo+dentista+gasolina+saldo+renta
             from bj7l3xtoftrlpschwtah.ingresos_damaris
@@ -245,6 +247,16 @@ class GetData:
             for x in data2:
                 damaris_li.append(x[0])
                 
+            sql3 = """select a.fecha, b.fecha 
+            from bj7l3xtoftrlpschwtah.ingresos_ivan a, bj7l3xtoftrlpschwtah.ingresos_damaris b """
+            
+            cursor.execute(sql3)
+            data3 = cursor.fetchall()
+            for x in data3:
+                date_li.append(x[0])
+                
+            max_date = max(date_li)
+                
             result_list1 = sum(ivan_li)
             result_list2 = sum(damaris_li)
 
@@ -253,7 +265,7 @@ class GetData:
             
             current_value = goal - (total_sum)
                 
-            return [total_sum, current_value]
+            return [total_sum, current_value, max_date]
         
         
     def save_income(app, database, income_list, name):

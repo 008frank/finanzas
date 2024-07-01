@@ -41,8 +41,10 @@ def home():
     total_value = sum(s for s in get_list if s > 0)
     
     current_amount = GetData.get_data_charts(None, app, mysql)
+    income_amount = f'{current_amount[0]:,.2f}'
+    remaining_amount = f'{current_amount[1]:,.2f}'
     
-    return render_template('home.html', element=get_totals, total=f'{total_value:,.2f}', ca=current_amount)
+    return render_template('home.html', element=get_totals, total=f'{total_value:,.2f}', ca=current_amount, stat=[income_amount, remaining_amount])
 
 
 @app.route('/income', methods=['GET','POST'])
