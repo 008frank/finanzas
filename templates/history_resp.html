@@ -127,6 +127,46 @@
         </table>
     </div>
 
+    <!-- MENU BUTTON -->
+    <script>
+        function menuClick() {
+            var x = document.getElementById("my_menu");
+            var y = document.getElementById("my_img");
+            var div_out = document.getElementById("my_holder");
+            
+            if (x.style.display == "flex") {
+                div_out.animate (
+                    [
+                        {
+                            transform: "translateX(0%)",
+                            opacity: 1
+                        },
+                        {
+                            transform: "translateX(100%)",
+                            opacity: 0.25
+                        }
+                    ], 
+                    {
+                        duration: 400,
+                    }
+                );
+                
+                setTimeout(
+                    function(){
+                        x.style.display = "none";
+                    },
+                    // miliseconds
+                    100
+                )
+                
+            }
+            else {
+                x.style.display = "flex";
+                y.style.backgroundColor = "orange";
+            }
+        }
+    </script>
+
     <!-- PIE CHARTS -->
     <script>
         var xYear = document.getElementById('year_1');
@@ -210,17 +250,23 @@
                 backgroundColor: "rgba(242, 38, 19)",
                 borderColor: "rgba(242, 38, 19, 0.388)",
                 data: yValues,
-                snapGap: false
+                snapGap: false,
                 }]
             },
             options: {
+                title: {
+                    display: true,
+                    text: "Egresos"
+                },
                 legend: {display: false},
                 scales: {
-                    y: {
-                        beginAtZero: true,
+                    yAxes: [{
                         ticks: {
-                            display: false
+                            display:false
                         }
+                    }],
+                    y: {
+                        beginAtZero: true
                     }
                 }
             }
@@ -255,13 +301,21 @@
                 }]
             },
             options: {
+                title: {
+                    display: true,
+                    text: "Egresos"
+                },
                 legend: {display: false},
                 scales: {
-                    yAxes: [{ticks: {max:20000}}],
+                    yAxes: [{
+                        ticks: {
+                            display:false
+                        }
+                    }],
                     y: {
                         beginAtZero: true
                     }
-                },
+                }
             }
         });
     </script>
