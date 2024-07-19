@@ -1,4 +1,5 @@
 from datetime import datetime as dt
+from totals_update import TotalUpdate
 
 class GetData:
     def set_balance(self, app, db):
@@ -41,180 +42,51 @@ class GetData:
                 raise Exception(ex)
     
     
-    def db_history(app, database, name):
-        if name == 'ivan':
-            cur_time = dt.now()
-            cur_year = cur_time.year
-            year_list = []
+    def db_history(app, database):
+        with app.app_context():            
+            cur = database.connection.cursor()
+            myData = []
+            cur_outflow_year = []
+            past_outflow_year = []
 
-            list_1 = []
-            list_2 = []
-            list_3 = []
-            response = []
+            date_format = dt.now()
+            cur_year = date_format.year
+            past_year = cur_year - 1
             
-            year_list.append(cur_year)
-            
-            for yl in range(2):
-                cur_year -= 1
-                year_list.append(cur_year)
-            
-            
-            # CONNETION TO GET FROM CURRENT DATE TO OLDEST
-            # CURRENT
-            sql = """SELECT * FROM bj7l3xtoftrlpschwtah.ingresos_ivan
-            WHERE YEAR(fecha) = {}""".format(year_list[0])
-            with app.app_context():            
-                cursor = database.connection.cursor()
-                cursor.execute(sql)
-                elements = cursor.fetchall()
-                
-                for a in elements:
-                    list_1.append(a)
-                
-                
-                # LAST
-                sql = """SELECT * FROM bj7l3xtoftrlpschwtah.ingresos_ivan
-                WHERE YEAR(fecha) = {}""".format(year_list[1])
-                cursor.execute(sql)
-                elements = cursor.fetchall()
-                
-                for b in elements:
-                    list_2.append(b)
-                    
-                    
-                # OLDEST
-                sql = """SELECT * FROM bj7l3xtoftrlpschwtah.ingresos_ivan
-                WHERE YEAR(fecha) = {}""".format(year_list[2])
-                cursor.execute(sql)
-                elements = cursor.fetchall()
-                
-                for c in elements:
-                    list_3.append(c)
-                    
-                
-                response.append(year_list)
-                response.append(list_1)
-                response.append(list_2)
-                response.append(list_3)
-                
-                return response
-        
-        
-        if name == 'damaris':
-            cur_time = dt.now()
-            cur_year = cur_time.year
-            year_list = []
+            sql = """select * from bj7l3xtoftrlpschwtah.totales"""
+            cur.execute(sql)
+            data = cur.fetchall()
 
-            list_1 = []
-            list_2 = []
-            list_3 = []
-            response = []
-            
-            year_list.append(cur_year)
-            
-            for yl in range(2):
-                cur_year -= 1
-                year_list.append(cur_year)
-            
-            
-            # CONNETION TO GET FROM CURRENT DATE TO OLDEST
-            # CURRENT
-            sql = """SELECT * FROM bj7l3xtoftrlpschwtah.ingresos_damaris
-            WHERE YEAR(fecha) = {}""".format(year_list[0])
-            with app.app_context():            
-                cursor = database.connection.cursor()
-                cursor.execute(sql)
-                elements = cursor.fetchall()
+            for x in data:
+                myData.append(list(x))
                 
-                for a in elements:
-                    list_1.append(a)
-                    
-                    
-                # LAST
-                sql = """SELECT * FROM bj7l3xtoftrlpschwtah.ingresos_damaris
-                WHERE YEAR(fecha) = {}""".format(year_list[1])
-                cursor.execute(sql)
-                elements = cursor.fetchall()
-                
-                for b in elements:
-                    list_2.append(b)
-                    
-                    
-                # OLDEST
-                sql = """SELECT * FROM bj7l3xtoftrlpschwtah.ingresos_damaris
-                WHERE YEAR(fecha) = {}""".format(year_list[2])
-                cursor.execute(sql)
-                elements = cursor.fetchall()
-                
-                for c in elements:
-                    list_3.append(c)
-                    
-                
-                response.append(year_list)
-                response.append(list_1)
-                response.append(list_2)
-                response.append(list_3)
-                
-                return response
-        
-        
-        
-        if name == 'egresos':
-            cur_time = dt.now()
-            cur_year = cur_time.year
-            year_list = []
+             # CURRENT YEAR
+            for x in range(1, 13):
+                sql2 = """select sum(total) from bj7l3xtoftrlpschwtah.egresos where year(fecha) = {} and month(fecha) = {};""".format(cur_year, x)
+                cur.execute(sql2)
+                outflow_data = cur.fetchall()
+                result1 = outflow_data[0][0]
 
-            list_1 = []
-            list_2 = []
-            list_3 = []
-            response = []
-            
-            year_list.append(cur_year)
-            
-            for yl in range(2):
-                cur_year -= 1
-                year_list.append(cur_year)
-            
-            
-            # CONNETION TO GET FROM CURRENT DATE TO OLDEST
-            # CURRENT
-            sql = """SELECT * FROM bj7l3xtoftrlpschwtah.egresos
-            WHERE YEAR(fecha) = {}""".format(year_list[0])
-            with app.app_context():            
-                cursor = database.connection.cursor()
-                cursor.execute(sql)
-                elements = cursor.fetchall()
-                
-                for a in elements:
-                    list_1.append(a)
-                    
-                    
-                # LAST
-                sql = """SELECT * FROM bj7l3xtoftrlpschwtah.egresos
-                WHERE YEAR(fecha) = {}""".format(year_list[1])
-                cursor.execute(sql)
-                elements = cursor.fetchall()
-                
-                for b in elements:
-                    list_2.append(b)
-                    
-                    
-                # OLDEST
-                sql = """SELECT * FROM bj7l3xtoftrlpschwtah.egresos
-                WHERE YEAR(fecha) = {}""".format(year_list[2])
-                cursor.execute(sql)
-                elements = cursor.fetchall()
-                
-                for c in elements:
-                    list_3.append(c)
-                    
-                
-                response.append(year_list)
-                response.append(list_1)
-                response.append(list_2)
-                response.append(list_3)
-                
-                return response
+                if result1 == None:
+                    cur_outflow_year.append(0)
+                else:
+                    cur_outflow_year.append(float(result1))
+
+            # LAST YEAR
+            for x in range(1, 13):
+                sql3 = """select sum(total) from bj7l3xtoftrlpschwtah.egresos where year(fecha) = {} and month(fecha) = {};""".format(past_year, x)
+                cur.execute(sql3)
+                outflow_data = cur.fetchall()
+                result2 = outflow_data[0][0]
+
+                if result2 == None:
+                    past_outflow_year.append(0)
+                else:
+                    past_outflow_year.append(float(result2))
+
+            outflows_list = [cur_outflow_year, past_outflow_year]
+
+            return [myData, outflows_list]
         
      
     def get_data_charts(self, app, database):
@@ -276,14 +148,18 @@ class GetData:
                     cursor = database.connection.cursor()
                     
                     current_date = dt.strftime(cur_date, "%Y-%m-%d")
+                    cur_total = sum(income_list)
                     
                     # CONNETION TO SAVE DATA
-                    sql = """INSERT INTO bj7l3xtoftrlpschwtah.ingresos_ivan(fecha, diezmo, despensa, salud, transporte, internet, luz, agua, gas)
-                    VALUES ('{}',{},{},{},{},{},{},{},{})""".format(current_date, income_list[0],income_list[1],income_list[2],
+                    sql = """INSERT INTO bj7l3xtoftrlpschwtah.ingresos_ivan(fecha, diezmo, despensa, salud, transporte, internet, luz, agua, gas, total)
+                    VALUES ('{}',{},{},{},{},{},{},{},{},{})""".format(current_date, income_list[0],income_list[1],income_list[2],
                                                                 income_list[3],income_list[4],income_list[5],income_list[6],
-                                                                income_list[7])
+                                                                income_list[7], cur_total)
                     cursor.execute(sql)
                     database.connection.commit()
+                    
+                    tup = TotalUpdate
+                    tup.updater(app, database)
                     
                     return True
                 
@@ -297,13 +173,17 @@ class GetData:
                     cursor = database.connection.cursor()
                 
                     current_date = dt.strftime(cur_date, "%Y-%m-%d")
+                    cur_total = sum(income_list)
                     
                     # CONNETION TO SAVE DATA
-                    sql = """INSERT INTO bj7l3xtoftrlpschwtah.ingresos_damaris(fecha, diezmo, dentista, saldo, gasolina, renta)
-                    VALUES ('{}',{},{},{},{},{})""".format(current_date, income_list[0],income_list[1],income_list[2],
-                                                                income_list[3],income_list[4])
+                    sql = """INSERT INTO bj7l3xtoftrlpschwtah.ingresos_damaris(fecha, diezmo, dentista, saldo, gasolina, renta, total)
+                    VALUES ('{}',{},{},{},{},{},{})""".format(current_date, income_list[0],income_list[1],income_list[2],
+                                                                income_list[3],income_list[4], cur_total)
                     cursor.execute(sql)
                     database.connection.commit()
+                    
+                    tup = TotalUpdate
+                    tup.updater(app, database)
                     
                     return True
             
@@ -318,14 +198,18 @@ class GetData:
                 cursor = database.connection.cursor()
             
                 current_date = dt.strftime(cur_date, "%Y-%m-%d")
+                cur_total = sum(bills_list)
                 
                 # CONNETION TO SAVE DATA
-                sql = """INSERT INTO bj7l3xtoftrlpschwtah.egresos(fecha, diezmo, despensa, salud, transporte, internet, luz, agua, gas, dentista, gasolina, saldo, renta)
-                VALUES ('{}',{},{},{},{},{},{},{},{},{},{},{},{})""".format(current_date, bills_list[0],bills_list[1],bills_list[2],
+                sql = """INSERT INTO bj7l3xtoftrlpschwtah.egresos(fecha, diezmo, despensa, salud, transporte, internet, luz, agua, gas, dentista, gasolina, saldo, renta, total)
+                VALUES ('{}',{},{},{},{},{},{},{},{},{},{},{},{},{})""".format(current_date, bills_list[0],bills_list[1],bills_list[2],
                                                             bills_list[3],bills_list[4],bills_list[5],bills_list[6],
-                                                            bills_list[7],bills_list[8],bills_list[9],bills_list[10],bills_list[11])
+                                                            bills_list[7],bills_list[8],bills_list[9],bills_list[10],bills_list[11], cur_total)
                 cursor.execute(sql)
                 database.connection.commit()
+                
+                tup = TotalUpdate
+                tup.updater(app, database)
                 
                 return True
         

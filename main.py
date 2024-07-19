@@ -49,26 +49,11 @@ def home():
 
 @app.route('/income', methods=['GET','POST'])
 def income():
+    
+    get_history_data = GetData.db_history(app, mysql)
+    
     if request.method=='POST':
-        try:
-            selection = request.form['select_form']
-        except:
-            selection = request.form['select_income_form']
-        
-        if selection == "history":
-            try:
-                history = request.form['get_my_history']
-                getting_history = GetData.db_history(app, mysql, history)
-                
-                years = getting_history[0]
-                data1 = getting_history[1]
-                data2 = getting_history[2]
-                data3 = getting_history[3]
-                
-                return render_template('income.html', user=history, yr=years, 
-                                    d1=data1, d2=data2, d3=data3)
-            except:
-                return redirect(url_for('income'))
+        selection = request.form['select_income_form']
         
         if selection == "incomes":
             # try:
@@ -126,12 +111,12 @@ def income():
                         end_text = "No ha sido posible guardar su información..."
                         return render_template('processed.html', et=end_tittle, etxt=end_text)
                     
-                return render_template('income.html')
+                return render_template('income.html', dt=get_history_data[0], of=get_history_data[1])
             # except:
-        return redirect(url_for('income'))
+        return render_template('income.html', dt=get_history_data[0], of=get_history_data[1])
         
     else:
-        return render_template('income.html')
+        return render_template('income.html', dt=get_history_data[0], of=get_history_data[1])
 
 
 @app.route('/bills', methods=['GET','POST'])
@@ -171,21 +156,10 @@ def bills():
 
 @app.route('/history', methods=['GET','POST'])
 def history():
-    if request.method=='POST':
-        try:
-            history = request.form['get_my_history']
-            getting_history = GetData.db_history(app, mysql, history)
-            
-            years = getting_history[0]
-            data1 = getting_history[1]
-            data2 = getting_history[2]
-            data3 = getting_history[3]
-            
-            return render_template('history_resp.html', user=history, yr=years, 
-                                    d1=data1, d2=data2, d3=data3)
-        except:
-            return redirect(url_for('history'))
-    return render_template('history_resp.html')
+    
+    get_history_data = GetData.db_history(app, mysql)
+    
+    return render_template('history_resp.html', dt=get_history_data[0], of=get_history_data[1])
 
 
 @app.route('/logout')

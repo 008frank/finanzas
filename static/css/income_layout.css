@@ -58,18 +58,19 @@ font-weight: bold;
 }
 .main_card {
     grid-area: cards;
+    width: 100%;
 }
 .main_history {
     grid-area: history;
+    width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: right;
 }
 
 
 /* RADIOS */
 .radio_container {
     margin-top: 20px;
-    font-family: sant-serif;
 }
 .radio-inputs {
     position: relative;
@@ -77,7 +78,7 @@ font-weight: bold;
     border-top-right-radius: 10px;
     background-color: rgba(58, 158, 240, 1);
     font-size: 14px;
-    width: 65%;
+    width: 95%;  /* RADIO BUTTONS WIDTH */
 }
 
 .radio-inputs .radio input {
@@ -93,6 +94,7 @@ font-weight: bold;
     border-top-right-radius: 0.5rem;
     border: none;
     padding: 0.5rem 0.8rem;
+    font-family: sans-serif;
     /* color: ; */
     transition: all 0.15s ease-in-out;
     position: relative;
@@ -131,7 +133,7 @@ font-weight: bold;
 }
 
 .cards {
-    width: 65%;
+    width: 95%;
 }
 .card_one {
     position: relative;
@@ -193,28 +195,47 @@ font-weight: bold;
 
 
 /* HISTORY */
-.div_history {
-    background-color: gold;
+table {
+    border-collapse: collapse;
+    width: 75%;
+    margin-right: 10px;
 }
-.history_container {
-    margin-inline: 10px;
+tr:nth-child(even) {
+    background-color: #f5f5f59c;
 }
-.calendar {
-    margin-block: 15px;
+td {
     width: 100%;
+    border-radius: 10px;
 }
-ul {
-    padding-left: 10px;
-    margin-block: 5px;
-}
-details summary {
-    list-style: none;
-    cursor: pointer;
-    /* margin-block: 5px; */
+
+
+#date_info {
+    text-align: center;
     font-weight: bold;
 }
-span {
-    color: green;
+#div_data {
+    margin-bottom: 15px;
+}
+
+.datacard_container {
+    display: grid;
+    grid-template-areas: 'months charts';
+}
+#month_list {grid-area: months;}
+.charts_div {
+    grid-area: charts;
+    display: grid;
+    grid-template-areas: 
+    'incomes' 
+    'outflows';
+}
+#incomes_chart {grid-area: incomes;}
+#outflows_chart {grid-area: outflows; margin: 30px;}
+
+
+li {margin-top: 10px; cursor: pointer;}
+li:hover {
+    color: rgb(173, 172, 172);
 }
 
 

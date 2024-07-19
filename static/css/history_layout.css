@@ -54,10 +54,7 @@ font-weight: bold;
     display: grid;
     width: 100%;
     grid-template-areas: 
-    "cards history";
-}
-.main_card {
-    grid-area: cards;
+    "history";
 }
 .main_history {
     grid-area: history;
@@ -67,28 +64,48 @@ font-weight: bold;
 
 
 /* HISTORY */
-.div_history {
-    background-color: gold;
-}
-.history_container {
-    margin-inline: 10px;
-}
-.calendar {
-    margin-block: 15px;
+table {
+    border-collapse: collapse;
     width: 100%;
+    margin-right: 5px;
+    margin-left: 5px;
 }
-ul {
-    padding-left: 10px;
-    margin-block: 5px;
+tr:nth-child(even) {
+    background-color: #f5f5f59c;
 }
-details summary {
-    list-style: none;
-    cursor: pointer;
-    /* margin-block: 5px; */
+td {
+    width: 100%;
+    border-radius: 10px;
+}
+
+
+#date_info {
+    text-align: center;
     font-weight: bold;
 }
-span {
-    color: green;
+#div_data {
+    margin-bottom: 15px;
+}
+
+.datacard_container {
+    display: grid;
+    grid-template-areas: 'months charts';
+}
+#month_list {grid-area: months;}
+.charts_div {
+    grid-area: charts;
+    display: grid;
+    grid-template-areas: 
+    'incomes' 
+    'outflows';
+}
+#incomes_chart {grid-area: incomes;}
+#outflows_chart {grid-area: outflows; margin: 30px;}
+
+ul {list-style: none;}
+li {margin-top: 10px; cursor: pointer;}
+li:hover {
+    color: rgb(173, 172, 172);
 }
 
 

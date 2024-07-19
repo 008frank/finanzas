@@ -47,3 +47,59 @@ function clean_areas(){
     document.getElementById('popUp').style.display = 'none';
     document.body.style.overflow = 'scroll';
 }
+
+
+
+// DATA CHARTS
+const thisMap = new Map([
+    ['Enero', [['Ingreso','Egreso'], [0,0]]]
+]);
+var barColors = [
+    "rgb(0, 150, 255)",
+    "rgb(211, 211, 211)"
+];
+  
+  
+const mainChart = new Chart("myChart1", {
+type: "pie",
+data: {
+    labels: thisMap.get('Enero')[0],
+    datasets: [{
+    backgroundColor: barColors,
+    data: thisMap.get('Enero')[1]
+    }]
+    },
+    options: {
+        title: {
+        display: false,
+        text: "Incomes"
+        },
+        
+    }
+});
+// --------------------------------------------------------------------------------------
+const thisMap2 = new Map([
+    ['Enero', [['Ingreso','Egreso'], [0,0]]]
+]);
+var barColors = [
+    "rgb(0, 150, 255)",
+    "rgb(211, 211, 211)"
+];
+
+
+const mainChart2 = new Chart("myChart3", {
+    type: "pie",
+    data: {
+        labels: thisMap.get('Enero')[0],
+        datasets: [{
+        backgroundColor: barColors,
+        data: thisMap.get('Enero')[1]
+        }]
+    },
+    options: {
+        title: {
+        display: false,
+        text: "Incomes"
+        }
+    }
+});
