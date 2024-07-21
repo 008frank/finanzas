@@ -91,7 +91,6 @@ td {
     display: grid;
     grid-template-areas: 'months charts';
 }
-#month_list {grid-area: months;}
 .charts_div {
     grid-area: charts;
     display: grid;
@@ -102,7 +101,10 @@ td {
 #incomes_chart {grid-area: incomes;}
 #outflows_chart {grid-area: outflows; margin: 30px;}
 
-ul {list-style: none;}
+ul {
+    list-style: none;
+    padding-left: 10px;
+}
 li {margin-top: 10px; cursor: pointer;}
 li:hover {
     color: rgb(173, 172, 172);
