@@ -162,3 +162,126 @@ class TotalUpdate:
             for month in months:
                 cur.execute(month)
                 database.connection.commit()
+
+
+    def total_income_update(app, database):
+        with app.app_context():            
+            cur = database.connection.cursor()
+
+            cur_year = dt.now().year
+            past_year = cur_year - 1
+
+            month_list = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
+
+            for i in range(1,13):
+                sql = f"""
+                update bj7l3xtoftrlpschwtah.ingresos_mensuales 
+                set
+                diezmo_actual =((select sum(diezmo) + (
+                        select sum(diezmo) 
+                            from bj7l3xtoftrlpschwtah.ingresos_damaris
+                            where year(fecha)={cur_year} and month(fecha)={i})
+                    from bj7l3xtoftrlpschwtah.ingresos_ivan
+                    where year(fecha)={cur_year} and month(fecha)={i})),
+
+                diezmo_pasado = ((select sum(diezmo) + (
+                        select sum(diezmo) 
+                            from bj7l3xtoftrlpschwtah.ingresos_damaris
+                            where year(fecha)={past_year} and month(fecha)={i}
+                    )
+                    from bj7l3xtoftrlpschwtah.ingresos_ivan
+                    where year(fecha)={past_year} and month(fecha)={i})),
+
+                -- DESPENSA
+                despensa_actual = ((select sum(despensa) 
+                    from bj7l3xtoftrlpschwtah.ingresos_ivan
+                    where year(fecha)={cur_year} and month(fecha)={i})),
+                despensa_pasado = ((select sum(despensa) 
+                    from bj7l3xtoftrlpschwtah.ingresos_ivan
+                    where year(fecha)={past_year} and month(fecha)={i})),
+                    
+                -- SALUD
+                salud_actual = ((select sum(salud) 
+                    from bj7l3xtoftrlpschwtah.ingresos_ivan
+                    where year(fecha)={cur_year} and month(fecha)={i})),
+                salud_pasado = ((select sum(salud) 
+                    from bj7l3xtoftrlpschwtah.ingresos_ivan
+                    where year(fecha)={past_year} and month(fecha)={i})),
+                    
+                -- TRANSPORTE
+                transporte_actual = ((select sum(transporte) 
+                    from bj7l3xtoftrlpschwtah.ingresos_ivan
+                    where year(fecha)={cur_year} and month(fecha)={i})),
+                transporte_pasado = ((select sum(transporte) 
+                    from bj7l3xtoftrlpschwtah.ingresos_ivan
+                    where year(fecha)={past_year} and month(fecha)={i})),
+                    
+                -- INTERNET
+                internet_actual = ((select sum(internet) 
+                    from bj7l3xtoftrlpschwtah.ingresos_ivan
+                    where year(fecha)={cur_year} and month(fecha)={i})),
+                internet_pasado = ((select sum(internet) 
+                    from bj7l3xtoftrlpschwtah.ingresos_ivan
+                    where year(fecha)={past_year} and month(fecha)={i})),
+                    
+                -- LUZ
+                luz_actual = ((select sum(luz) 
+                    from bj7l3xtoftrlpschwtah.ingresos_ivan
+                    where year(fecha)={cur_year} and month(fecha)={i})),
+                luz_pasado = ((select sum(luz) 
+                    from bj7l3xtoftrlpschwtah.ingresos_ivan
+                    where year(fecha)={past_year} and month(fecha)={i})),
+                    
+                -- AGUA
+                agua_actual = ((select sum(agua) 
+                    from bj7l3xtoftrlpschwtah.ingresos_ivan
+                    where year(fecha)={cur_year} and month(fecha)={i})),
+                agua_pasado = ((select sum(agua) 
+                    from bj7l3xtoftrlpschwtah.ingresos_ivan
+                    where year(fecha)={past_year} and month(fecha)={i})),
+                    
+                -- GAS
+                gas_actual = ((select sum(gas) 
+                    from bj7l3xtoftrlpschwtah.ingresos_ivan
+                    where year(fecha)={cur_year} and month(fecha)={i})),
+                gas_pasado = ((select sum(gas) 
+                    from bj7l3xtoftrlpschwtah.ingresos_ivan
+                    where year(fecha)={past_year} and month(fecha)={i})),
+                    
+                -- DENTISTA
+                dentista_actual = ((select sum(dentista) 
+                    from bj7l3xtoftrlpschwtah.ingresos_damaris
+                    where year(fecha)={cur_year} and month(fecha)={i})),
+                dentista_pasado = ((select sum(dentista) 
+                    from bj7l3xtoftrlpschwtah.ingresos_damaris
+                    where year(fecha)={past_year} and month(fecha)={i})),
+                    
+                -- SALDO
+                saldo_actual = ((select sum(saldo) 
+                    from bj7l3xtoftrlpschwtah.ingresos_damaris
+                    where year(fecha)={cur_year} and month(fecha)={i})),
+                saldo_pasado = ((select sum(saldo) 
+                    from bj7l3xtoftrlpschwtah.ingresos_damaris
+                    where year(fecha)={past_year} and month(fecha)={i})),
+                    
+                -- GASOLINA
+                gasolina_actual = ((select sum(gasolina) 
+                    from bj7l3xtoftrlpschwtah.ingresos_damaris
+                    where year(fecha)={cur_year} and month(fecha)={i})),
+                gasolina_pasado = ((select sum(gasolina) 
+                    from bj7l3xtoftrlpschwtah.ingresos_damaris
+                    where year(fecha)={past_year} and month(fecha)={i})),
+                    
+                -- RENTA
+                renta_actual = ((select sum(renta) 
+                    from bj7l3xtoftrlpschwtah.ingresos_damaris
+                    where year(fecha)={cur_year} and month(fecha)={i})),
+                renta_pasado = ((select sum(renta) 
+                    from bj7l3xtoftrlpschwtah.ingresos_damaris
+                    where year(fecha)={past_year} and month(fecha)={i}))
+
+                where mes='{month_list[i]}';
+                """
+
+                cur.execute(sql)
+                database.connection.commit()

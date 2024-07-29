@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/history_layout.css') }}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <title>Historial</title>
     <link rel="shortcut icon" href="/static/css/img/piggy_bank_banking_investment_business_finance_icon_227637.ico">
 </head>
@@ -74,8 +75,8 @@
                                         <canvas id="myChart1" style="width:100%;max-width:600px"></canvas>
                                     </div>
                                     <div id="outflows_chart">
+                                        <div id="myPlot" style="width:100%;max-width:700px"></div>
                                         <canvas id="myChart2" style="width:100%;max-width:600px;min-height: 150px"></canvas>
-                                        
                                     </div>
                                 </div>
                             </div>
@@ -116,8 +117,8 @@
                                         <canvas id="myChart3" style="width:100%;max-width:600px"></canvas>
                                     </div>
                                     <div id="outflows_chart">
+                                        <div id="myPlot2" style="width:100%;max-width:700px"></div> 
                                         <canvas id="myChart4" style="width:100%;max-width:600px;min-height: 150px"></canvas>
-                                        
                                     </div>
                                 </div>
                             </div>
@@ -194,6 +195,50 @@
 
             mainChart.update();
 
+            const mList = new Map([
+                ['Enero',[{{current[11]}},{{current[10]}},{{current[9]}},{{current[8]}},{{current[7]}},{{current[6]}}, 
+                        {{current[5]}},{{current[4]}},{{current[3]}},{{current[2]}},{{current[1]}},{{current[0]}}]],      
+
+                ['Febrero',[{{current[23]}},{{current[22]}},{{current[21]}},{{current[20]}},{{current[19]}},{{current[18]}},
+                        {{current[17]}},{{current[16]}},{{current[15]}},{{current[14]}},{{current[13]}},{{current[12]}}]],
+                
+                ['Marzo',[{{current[35]}},{{current[34]}},{{current[33]}},{{current[32]}},{{current[31]}},{{current[30]}},
+                        {{current[29]}},{{current[28]}},{{current[27]}},{{current[26]}},{{current[25]}},{{current[24]}}]],
+
+                ['Abril',[{{current[47]}},{{current[46]}},{{current[45]}},{{current[44]}},{{current[43]}},{{current[42]}},
+                        {{current[41]}},{{current[40]}},{{current[39]}},{{current[38]}},{{current[37]}},{{current[36]}}]],
+
+                ['Mayo',[{{current[59]}},{{current[58]}},{{current[57]}},{{current[56]}},{{current[55]}},{{current[54]}},
+                        {{current[53]}},{{current[52]}},{{current[51]}},{{current[50]}},{{current[49]}},{{current[48]}}]],
+
+                ['Junio',[{{current[71]}},{{current[70]}},{{current[69]}},{{current[68]}},{{current[67]}},{{current[66]}},
+                        {{current[65]}},{{current[64]}},{{current[63]}},{{current[62]}},{{current[61]}},{{current[60]}}]],
+
+                ['Julio',[{{current[83]}},{{current[82]}},{{current[81]}},{{current[80]}},{{current[79]}},{{current[78]}},
+                        {{current[77]}},{{current[76]}},{{current[75]}},{{current[74]}},{{current[73]}},{{current[72]}}]],
+
+                ['Agosto',[{{current[95]}},{{current[94]}},{{current[93]}},{{current[92]}},{{current[91]}},{{current[90]}},
+                        {{current[89]}},{{current[88]}},{{current[87]}},{{current[86]}},{{current[85]}},{{current[84]}}]],
+
+                ['Septiembre',[{{current[107]}},{{current[106]}},{{current[105]}},{{current[104]}},{{current[103]}},{{current[102]}},
+                        {{current[101]}},{{current[100]}},{{current[99]}},{{current[98]}},{{current[97]}},{{current[96]}}]],
+
+                ['Octubre',[{{current[119]}},{{current[118]}},{{current[117]}},{{current[116]}},{{current[115]}},{{current[114]}},
+                        {{current[113]}},{{current[112]}},{{current[111]}},{{current[110]}},{{current[109]}},{{current[108]}}]],
+
+                ['Noviembre',[{{current[131]}},{{current[130]}},{{current[129]}},{{current[128]}},{{current[127]}},{{current[126]}},
+                        {{current[125]}},{{current[124]}},{{current[123]}},{{current[122]}},{{current[121]}},{{current[120]}}]],
+
+                ['Diciembre',[{{current[143]}},{{current[142]}},{{current[141]}},{{current[140]}},{{current[139]}},{{current[138]}},
+                        {{current[137]}},{{current[136]}},{{current[135]}},{{current[134]}},{{current[133]}},{{current[132]}}]]
+            ]);
+            
+            const myUpdate = {
+                x: [mList.get(myMonth)]
+            };
+
+            Plotly.update("myPlot", myUpdate);
+
         }
     </script>
     <script>
@@ -220,6 +265,52 @@
             mainChart2.config.data.datasets[0].data = thisMap.get(myMonth)[1];
 
             mainChart2.update();
+
+            const mList2 = new Map([
+                ['Enero',[{{past[11]}},{{past[10]}},{{past[9]}},{{past[8]}},{{past[7]}},{{past[6]}}, 
+                        {{past[5]}},{{past[4]}},{{past[3]}},{{past[2]}},{{past[1]}},{{past[0]}}]],      
+
+                ['Febrero',[{{past[23]}},{{past[22]}},{{past[21]}},{{past[20]}},{{past[19]}},{{past[18]}},
+                        {{past[17]}},{{past[16]}},{{past[15]}},{{past[14]}},{{past[13]}},{{past[12]}}]],
+                
+                ['Marzo',[{{past[35]}},{{past[34]}},{{past[33]}},{{past[32]}},{{past[31]}},{{past[30]}},
+                        {{past[29]}},{{past[28]}},{{past[27]}},{{past[26]}},{{past[25]}},{{past[24]}}]],
+
+                ['Abril',[{{past[47]}},{{past[46]}},{{past[45]}},{{past[44]}},{{past[43]}},{{past[42]}},
+                        {{past[41]}},{{past[40]}},{{past[39]}},{{past[38]}},{{past[37]}},{{past[36]}}]],
+
+                ['Mayo',[{{past[59]}},{{past[58]}},{{past[57]}},{{past[56]}},{{past[55]}},{{past[54]}},
+                        {{past[53]}},{{past[52]}},{{past[51]}},{{past[50]}},{{past[49]}},{{past[48]}}]],
+
+                ['Junio',[{{past[71]}},{{past[70]}},{{past[69]}},{{past[68]}},{{past[67]}},{{past[66]}},
+                        {{past[65]}},{{past[64]}},{{past[63]}},{{past[62]}},{{past[61]}},{{past[60]}}]],
+
+                ['Julio',[{{past[83]}},{{past[82]}},{{past[81]}},{{past[80]}},{{past[79]}},{{past[78]}},
+                        {{past[77]}},{{past[76]}},{{past[75]}},{{past[74]}},{{past[73]}},{{past[72]}}]],
+
+                ['Agosto',[{{past[95]}},{{past[94]}},{{past[93]}},{{past[92]}},{{past[91]}},{{past[90]}},
+                        {{past[89]}},{{past[88]}},{{past[87]}},{{past[86]}},{{past[85]}},{{past[84]}}]],
+
+                ['Septiembre',[{{past[107]}},{{past[106]}},{{past[105]}},{{past[104]}},{{past[103]}},{{past[102]}},
+                        {{past[101]}},{{past[100]}},{{past[99]}},{{past[98]}},{{past[97]}},{{past[96]}}]],
+
+                ['Octubre',[{{past[119]}},{{past[118]}},{{past[117]}},{{past[116]}},{{past[115]}},{{past[114]}},
+                        {{past[113]}},{{past[112]}},{{past[111]}},{{past[110]}},{{past[109]}},{{past[108]}}]],
+
+                ['Noviembre',[{{past[131]}},{{past[130]}},{{past[129]}},{{past[128]}},{{past[127]}},{{past[126]}},
+                        {{past[125]}},{{past[124]}},{{past[123]}},{{past[122]}},{{past[121]}},{{past[120]}}]],
+
+                ['Diciembre',[{{past[143]}},{{past[142]}},{{past[141]}},{{past[140]}},{{past[139]}},{{past[138]}},
+                        {{past[137]}},{{past[136]}},{{past[135]}},{{past[134]}},{{past[133]}},{{past[132]}}]]
+            ]);
+
+            console.log(mList2.get(myMonth))
+            
+            const myUpdate2 = {
+                x: [mList2.get(myMonth)]
+            };
+
+            Plotly.update("myPlot2", myUpdate2);
 
         }
     </script>
@@ -319,6 +410,48 @@
                 }
             }
         });
+    </script>
+
+
+    <!-- BAR CHARTS -->
+    <script>
+        const xArray = new Map([
+            ['Enero',[0,0,0,0,0,0,0,0,0,0,0,0]]
+        ]);
+        const yArray = ['Renta','Gasolina','Saldo','Dent','Gas','Agua','Luz','Inter','Transp','Salud','Desp','Diezmo'];
+
+        const data = [{
+        x:xArray.get('Enero'),
+        y:yArray,
+        type:"bar",
+        orientation:"h",
+        marker: {color:"rgba(178,222,39,0.6)"}
+        }];
+        const layout = {
+            xaxis: {rangemode: 'nonnegative'}
+        };
+
+        Plotly.newPlot("myPlot", data, layout);
+    </script>
+
+    <script>
+        const xArray2 = new Map([
+            ['Enero',[0,0,0,0,0,0,0,0,0,0,0,0]]
+        ]);
+        const yArray2 = ['Renta','Gasolina','Saldo','Dent','Gas','Agua','Luz','Inter','Transp','Salud','Desp','Diezmo'];
+
+        const data2 = [{
+        x:xArray2.get('Enero'),
+        y:yArray2,
+        type:"bar",
+        orientation:"h",
+        marker: {color:"rgba(178,222,39,0.6)"}
+        }];
+        const layout2 = {
+            xaxis: {rangemode: 'nonnegative'}
+        };
+
+        Plotly.newPlot("myPlot2", data2, layout2);
     </script>
 
     <script src="/static/functions.js"></script>

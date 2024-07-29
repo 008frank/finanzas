@@ -51,6 +51,7 @@ def home():
 def income():
     
     get_history_data = GetData.db_history(app, mysql)
+    get_income_history = GetData.incomes_barchart(app, mysql)
     
     if request.method=='POST':
         selection = request.form['select_income_form']
@@ -111,12 +112,15 @@ def income():
                         end_text = "No ha sido posible guardar su información..."
                         return render_template('processed.html', et=end_tittle, etxt=end_text)
                     
-                return render_template('income.html', dt=get_history_data[0], of=get_history_data[1])
+                return render_template('income.html', dt=get_history_data[0], of=get_history_data[1], 
+                                       current=get_income_history[0], past=get_income_history[1])
             # except:
-        return render_template('income.html', dt=get_history_data[0], of=get_history_data[1])
+        return render_template('income.html', dt=get_history_data[0], of=get_history_data[1],
+                               current=get_income_history[0], past=get_income_history[1])
         
     else:
-        return render_template('income.html', dt=get_history_data[0], of=get_history_data[1])
+        return render_template('income.html', dt=get_history_data[0], of=get_history_data[1],
+                               current=get_income_history[0], past=get_income_history[1])
 
 
 @app.route('/bills', methods=['GET','POST'])
@@ -158,8 +162,10 @@ def bills():
 def history():
     
     get_history_data = GetData.db_history(app, mysql)
+    get_income_history = GetData.incomes_barchart(app, mysql)
     
-    return render_template('history_resp.html', dt=get_history_data[0], of=get_history_data[1])
+    return render_template('history_resp.html', dt=get_history_data[0], of=get_history_data[1],
+                           current=get_income_history[0], past=get_income_history[1])
 
 
 @app.route('/logout')

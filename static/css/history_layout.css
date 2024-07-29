@@ -72,6 +72,7 @@ table {
 }
 tr:nth-child(even) {
     background-color: #f5f5f59c;
+    display: flex;
 }
 td {
     width: 100%;
@@ -89,8 +90,11 @@ td {
 
 .datacard_container {
     display: grid;
-    grid-template-areas: 'months charts';
+    grid-template-areas: 
+    'months' 
+    'charts';
 }
+#month_list {grid-area: months; margin-bottom: 10px;}
 .charts_div {
     grid-area: charts;
     display: grid;
@@ -105,7 +109,13 @@ ul {
     list-style: none;
     padding-left: 10px;
 }
-li {margin-top: 10px; cursor: pointer;}
+li {
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    font-size: 10px;
+}
 li:hover {
     color: rgb(173, 172, 172);
 }
