@@ -43,16 +43,16 @@
             <div class="card_one" id="ivan">
                 <div class="card_one_data">
                     <input type="number" placeholder="Diezmo" name="diezmo" id="id_diezmo">
-                    <input type="number" placeholder="Despensa" name="despensa">
-                    <input type="number" placeholder="Salud" name="salud">
-                    <input  type="number" placeholder="Transporte" name="transporte">
-                    <input  type="number" placeholder="Internet" name="internet">
-                    <input type="number" placeholder="Luz" name="luz">
-                    <input type="number" placeholder="Agua" name="agua">
-                    <input type="number" placeholder="Gas" name="gas" id="id_gas">
-                    <input  type="number" placeholder="Dentista" name="dentista">
-                    <input type="number"  placeholder="Gasolina" name="gasolina">
-                    <input  type="number" placeholder="Saldo" name="saldo">
+                    <input type="number" placeholder="Despensa" name="despensa" id="id_despensa">
+                    <input type="number" placeholder="Salud" name="salud" id="id_salud">
+                    <input  type="number" placeholder="Transporte" name="transporte" id="id_transporte">
+                    <input  type="number" placeholder="Internet" name="internet" id="id_internet">
+                    <input type="number" placeholder="Luz" name="luz" id="id_luz">
+                    <input type="number" placeholder="Agua" name="agua" id="id_agua">
+                    <input type="number" placeholder="Gas" name="gas" id="id_gas" id="id_gas">
+                    <input  type="number" placeholder="Dentista" name="dentista" id="id_dentista">
+                    <input type="number"  placeholder="Gasolina" name="gasolina" id="id_gasolina">
+                    <input  type="number" placeholder="Saldo" name="saldo" id="id_saldo">
                     <input  type="number" placeholder="Renta" name="renta" id="id_renta">
                     <button id="save_button" onclick="saveIncomes()">Guardar</button>
                 </div>
@@ -99,6 +99,25 @@
             }
         }
     </script>
+
+    <!-- EMPTY FIELDS -->
+    <script>
+        var idList = ["id_diezmo","id_despensa","id_salud","id_transporte","id_internet","id_luz","id_agua","id_gas",
+                        "id_dentista","id_gasolina","id_saldo","id_renta"]
+        for (i=0; i < idList.length; i++) {
+
+            const myInput = document.getElementById(idList[i]);
+
+            myInput.addEventListener("input", () =>{
+                if (myInput.value.length > 0){
+                    myInput.style.borderColor = "#66FF00";
+                }
+                else {
+                    myInput.style.borderColor = "red";
+                }
+            });
+        }
+     </script>
 
 </body>
 </html>

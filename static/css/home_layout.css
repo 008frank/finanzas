@@ -16,7 +16,7 @@ body {
 }
 h1 {
   grid-area: grid1;
-  padding-left: 10px;
+  padding-left: 6px;
   color: white;
 }
 .menu_header {
@@ -125,11 +125,11 @@ tr:hover {
   .menu_div {
     display: block;
     display: flex;
-    justify-content: center;
+    justify-content: right;
     align-items: center;
   }
   .menu_img{
-  background-image: url(/static/css/img/open-menu.png);
+  background-image: url(/static/css/img/line_menu.png);
   background-size: cover ;
   height: 50px;
   width: 50px;
