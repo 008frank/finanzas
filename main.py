@@ -75,6 +75,9 @@ def income():
                         save_information = GetData.save_income(app, mysql, elements_list, user)
                         
                         if save_information == True:
+                            update_balance = GetData
+                            update_balance.update_balance(app, mysql)
+                            
                             end_tittle = "¡El proceso ha sido exitoso!"
                             end_text = "Se ha guardado tu informacion correctamente..."
                             return render_template('processed.html', et=end_tittle, etxt=end_text)
@@ -100,6 +103,9 @@ def income():
                         save_information = GetData.save_income(app, mysql, elements_list, user)
                         
                         if save_information == True:
+                            update_balance = GetData
+                            update_balance.update_balance(app, mysql)
+                            
                             end_tittle = "¡El proceso ha sido exitoso!"
                             end_text = "Se ha guardado tu informacion correctamente..."
                             return render_template('processed.html', et=end_tittle, etxt=end_text)
@@ -145,6 +151,9 @@ def bills():
             save_information = GetData.save_bills(app, mysql, elements_list)
             
             if save_information == True:
+                update_balance = GetData
+                update_balance.update_balance(app, mysql)
+                            
                 end_tittle = "¡El proceso ha sido exitoso!"
                 end_text = "Se ha guardado tu informacion correctamente..."
                 return render_template('processed.html', et=end_tittle, etxt=end_text)

@@ -2,6 +2,25 @@ from datetime import datetime as dt
 from totals_update import TotalUpdate
 
 class GetData:
+    def update_balance(app, db):
+        with app.app_context():
+            cursor = db.connection.cursor()
+            sql_update = """UPDATE bj7l3xtoftrlpschwtah.balance
+                        SET diezmo=(select(select sum(diezmo)+(select sum(diezmo) from bj7l3xtoftrlpschwtah.ingresos_damaris) from bj7l3xtoftrlpschwtah.ingresos_ivan) - (select sum(diezmo) from bj7l3xtoftrlpschwtah.egresos)),
+                            despensa=(select sum(despensa)-(select sum(despensa)from bj7l3xtoftrlpschwtah.egresos) from bj7l3xtoftrlpschwtah.ingresos_ivan),
+                            salud=(select sum(salud)-(select sum(salud)from bj7l3xtoftrlpschwtah.egresos) from bj7l3xtoftrlpschwtah.ingresos_ivan),
+                            transporte=(select sum(transporte)-(select sum(transporte)from bj7l3xtoftrlpschwtah.egresos) from bj7l3xtoftrlpschwtah.ingresos_ivan),
+                            internet=(select sum(internet)-(select sum(internet)from bj7l3xtoftrlpschwtah.egresos) from bj7l3xtoftrlpschwtah.ingresos_ivan),
+                            luz=(select sum(luz)-(select sum(luz)from bj7l3xtoftrlpschwtah.egresos) from bj7l3xtoftrlpschwtah.ingresos_ivan),
+                            agua=(select sum(agua)-(select sum(agua)from bj7l3xtoftrlpschwtah.egresos) from bj7l3xtoftrlpschwtah.ingresos_ivan),
+                            gas=(select sum(gas)-(select sum(gas)from bj7l3xtoftrlpschwtah.egresos) from bj7l3xtoftrlpschwtah.ingresos_ivan),
+                            dentista=(select sum(dentista)-(select sum(dentista)from bj7l3xtoftrlpschwtah.egresos) from bj7l3xtoftrlpschwtah.ingresos_damaris),
+                            saldo=(select sum(saldo)-(select sum(saldo)from bj7l3xtoftrlpschwtah.egresos) from bj7l3xtoftrlpschwtah.ingresos_damaris),
+                            gasolina=(select sum(gasolina)-(select sum(gasolina)from bj7l3xtoftrlpschwtah.egresos) from bj7l3xtoftrlpschwtah.ingresos_damaris),
+                            renta=(select sum(renta)-(select sum(renta)from bj7l3xtoftrlpschwtah.egresos) from bj7l3xtoftrlpschwtah.ingresos_damaris);"""
+            cursor.execute(sql_update)
+            db.connection.commit()
+    
     def set_balance(self, app, db):
         with app.app_context():
             cursor = db.connection.cursor()
