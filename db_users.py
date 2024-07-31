@@ -152,7 +152,7 @@ class GetData:
             result_list2 = sum(damaris_li)
 
             total_sum = result_list1 + result_list2
-            goal = 16320
+            goal = 16600
             
             current_value = goal - (total_sum)
                 
